@@ -1,0 +1,42 @@
+Kaisi Zheng
+9149509460
+
+Ubuntu version : 14.04 TLS
+
+Description: 
+
+The program is designed for simulate the healthcenter,doctor and patient. I built a UDP servers for health center, it can accept several clients including doctors and patients. There are two doctors and four patients, we need to handle with. I used multi-thread (fork()) technology to deal with the doctors and patients. 
+
+First, I built a UDP server and two UDP clients to simulate the patient registration processes and healthcenter recording processes. The healthcenter will dynamically assign and record every patient port number by using bind() and listen(), so that we can built the TCP socket for them. I used a random number to help the patients be assigned to the doctors. I write a program simulate two doctors. They will log in and read the records for the patients. 
+
+Secondly,the doctors will use their password hard coding in the program to log in their account. I wrote a program and a method to make the health center to verify their pass word and user name. In this processes, I wrote a method called verify which will first read the "healthcenter.txt" file and use the user name and pass word their to veriy their passwords. Once the doctors log in successfully, the doctors will be able to read the patients' record locally, it will help them create the TCP socket.
+
+Thirdly, I create a TCP socket between doctor and patients, the doctor will send the patient they have now, the welcome information, the patient name and port to the patients. The patient who received the information from TCP socket will then try to connect() to another patient so that in kill of information will pass through all patients. At the end of the processes, the last patient's screen will displats "Peer# joined doctor# group." 
+
+
+
+The project has three main file: healthcenter1.cpp  patient1.cpp  doctor1.cpp
+
+healthcenter1.cpp : It will create a UDP socket for accept the information from the patients and doctors. It will write a file called "directory.txt" to record the TCP information for the patients. It will read the document called "healthcenter.txt" to verify the user name and passwords from the doctors.
+
+patient1.cpp :  Basically, the program will create four fork() of patients. It will first create UDP socket and use the port number increasingly, and then it will work as a server for TCP socket, and the doctors could able to send the message to them. The patient1.cpp will then create another socket to communicate with next patient. Here, the other patient will work like a TCP server. 
+
+doctor1.cpp : Two doctors processes, bind UDP port for the healthcenter and wait fot the message from the patients.
+
+Running Order :
+
+1. Run "make" to compile all the codes. Open 3 command windows to run file. the information. 
+2. Run "./healthcenter"in first window to start UDP server.
+3. Run "./patient" in second window to start patient registration processes.
+4. Run "./doctor" in third window to start TCP server.
+
+Program failed condition: 
+
+1. Do not have file "healthcenter.txt", "doctor1.txt" and "doctor2.txt".
+
+2. The three files mentioned above are in the different location.
+
+3.Change the password in "healthcenter.txt" will cause log in failed, in orther words, it will not allowed wrong passwords to log in and exchanged the information from the health center.
+
+4.Some of the version of Ubuntu read "/0" at the end of a string and some of them don't. The function of program work properly for the Ubuntu version 14.04 TLS and the virtual mechine I used is VMware. It will cause some problems for reading the schedule incorrectly for some other version of Ubuntu or other virtual mechine.
+
